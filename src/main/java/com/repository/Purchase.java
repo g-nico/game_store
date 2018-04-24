@@ -32,6 +32,8 @@ public class Purchase implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date purchaseDate;
 
+    private Float finalPrice;
+
     public Purchase() {
         games = new ArrayList<>();
 
