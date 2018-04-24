@@ -1,0 +1,30 @@
+@startuml
+
+class Game
+enum Category
+class Employee
+class Client
+class Order
+
+hide Game methods
+hide Game fields
+
+hide Employee methods
+hide Employee fields
+
+hide Category methods
+hide Category fields
+
+hide Client methods
+hide Client fields
+
+hide Order methods
+hide Order fields
+
+Order *-- Game
+Employee -- Game
+Employee -- Order
+Game o--Category
+Order *-- Client
+
+@enduml

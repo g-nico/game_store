@@ -16,7 +16,6 @@ public class UserMapper {
         userDto.setEmail(user.getEmail());
         userDto.setAddress(user.getAddress());
         userDto.setRole(user.getRole());
-        userDto.setPurchaseId(user.getPurchases().get(0).getId());
     }
 
     public static void toUser(final UserDto userDto, final User user) {

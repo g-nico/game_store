@@ -1,0 +1,19 @@
+@startuml
+
+package controller
+package model {
+    package enums
+    package frontObjects
+}
+package repository
+package service
+package utility
+
+controller ---> service
+controller -> model
+service --> model
+service --> repository
+service --> utility
+repository --> enums
+
+@enduml

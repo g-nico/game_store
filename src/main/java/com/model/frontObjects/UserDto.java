@@ -15,13 +15,13 @@ public class UserDto {
 
     private Long id;
 
-    @Pattern(regexp = "[a-zA-Z0-9\\._-]{6,25}", message = "Username has to be between 6 and 25 characters long. It can contain \"-\", \"_ \" or \".\"")
+    @Pattern(regexp = "[a-zA-Z0-9\\._-]{4,25}", message = "Username has to be between 4 and 25 characters long. It can contain \"-\", \"_ \" or \".\"")
     private String username;
 
     @Pattern(regexp = "^[a-zA-Z\\s]+$", message = "Name can contain only letters")
     private String name;
 
-    @Pattern(regexp = "[a-zA-Z0-9\\._-]{6,25}", message = "Password must be between 6 and 25 characters. It can contain \"-\", \"_ \" or \".\"")
+    @Pattern(regexp = "[a-zA-Z0-9\\._-]{4,25}", message = "Password must be between 4 and 25 characters. It can contain \"-\", \"_ \" or \".\"")
     private String password;
 
     private String confirmPassword;

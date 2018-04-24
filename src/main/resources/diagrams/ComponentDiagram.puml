@@ -1,0 +1,21 @@
+@startuml
+
+package "Front end" {
+[ThymeLeaf] - HTTP
+}
+
+package "Back end" {
+HTTP -- [Controllers]
+
+[Controllers] --> [Service]
+
+[Service] --> repository
+
+repository --> JPA
+}
+
+database "MySql" {
+    JPA -> [game_store]
+}
+
+@enduml

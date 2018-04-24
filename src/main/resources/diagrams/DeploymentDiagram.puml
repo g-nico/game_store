@@ -1,0 +1,23 @@
+@startuml
+
+package "deployment - Game store Application" {
+
+node My_Computer <<device>> {
+    node "JettyEmbeddedWebAppContext" <<server>> {
+        node "Spring FrameworkServlet" <<dispatcher>> {
+            [*.jar] <<artifact>>
+        }
+    }
+}
+
+node My__Computer <<device>> {
+    node "MySql Server" <<db system>> {
+        [game_sore] <<schema>>
+    }
+}
+
+My__Computer -- My_Computer : TCP/IP <<protocol>>
+
+}
+
+@enduml

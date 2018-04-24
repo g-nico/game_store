@@ -20,7 +20,7 @@ public class UserService {
         List<User> users = userRepository.findAll();
         List<UserDto> userDtos = new ArrayList<>();
 
-        UserMapper.toUserDtoList(users, userDtos);
+        userDtos = UserMapper.toUserDtoList(users, userDtos);
         return userDtos;
     }
 
