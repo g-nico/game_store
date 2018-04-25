@@ -37,6 +37,7 @@ public class Game implements Serializable{
     private Float price;
 
     private Genre genre;
+    private String imgPath;
 
     public Game() {
         purchases = new ArrayList<>();

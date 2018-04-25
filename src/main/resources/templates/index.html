@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Game Store</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://fonts.googleapis.com/css?family=Lato"
+          rel="stylesheet" type="text/css"/>
+    <link href="http://fonts.googleapis.com/css?family=Montserrat"
+          rel="stylesheet" type="text/css"/>
+    <link
+            href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+            rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+
+    <script src="../../static/js/bootstrap.min.js"
+            th:src="@{~/js/bootstrap.min.js}"></script>
+</head>
+<body id="#homepage">
+<div th:include="fragments/header :: header"></div>
+
+<h2 >Welcome</h2>
+<div class="container table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Game title</th>
+            <th></th>
+            <th>Price</th>
+            <th>In Stock</th>
+            <th>Genre</th>
+        </tr>
+        </thead>
+        <tbody th:each="gameDto:${gameDtos}">
+        <tr>
+            <td th:text="${gameDto.name}"></td>
+            <td >
+                <img src="${gameDto.imgPath}"/>
+            </td>
+            <td th:text="${gameDto.price}"></td>
+            <td>
+                <input type="checkbox" th:checked="${game.inStock}" disabled="true"/>
+            </td>
+            <td th:text="${gameDto.genre}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

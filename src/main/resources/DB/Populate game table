@@ -1,0 +1,7 @@
+INSERT INTO `game_store`.`game` (`id`, `name`, `price`, `stock`) VALUES ('1', 'Assassin\'s Creed II', '20', '10');
+INSERT INTO `game_store`.`game` (`id`, `name`, `price`, `stock`) VALUES ('2', 'The Witcher 3', '15', '10');
+INSERT INTO `game_store`.`game` (`id`, `name`, `price`, `stock`) VALUES ('3', 'Legend Of Zelda - Breath of the Wild', '50', '30');
+UPDATE `game_store`.`game` SET `img_path`='/home/nicoleta.ghitescu/Downloads/GameStore/src/main/resources/static/images/Assassins_Creed_2.JPG' WHERE `id`='1';
+UPDATE `game_store`.`game` SET `img_path`='/home/nicoleta.ghitescu/Downloads/GameStore/src/main/resources/static/images/Witcher_3.jpg' WHERE `id`='2';
+UPDATE `game_store`.`game` SET `img_path`='/home/nicoleta.ghitescu/Downloads/GameStore/src/main/resources/static/images/The_Legend_of_Zelda_Breath_of_the_Wild.jpg' WHERE `id`='3';
+
