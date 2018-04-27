@@ -41,4 +41,12 @@ public class GameService {
     public void deleteGame(final Long id) {
         gameRepository.delete(id);
     }
+
+    public List<GameDto> getCart(final List<Long> ids) {
+        List<Game> games = gameRepository.findAll(ids);
+        List<GameDto> gameDtos = new ArrayList<>();
+        gameDtos = GameMapper.toGameDtoList(games, gameDtos);
+
+        return gameDtos;
+    }
 }

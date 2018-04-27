@@ -29,6 +29,8 @@ body.sigin-body {
 #tableImage:hover .img-on {
     display : block;
     margin : auto;
+    height : 100px;
+    width : 223px;
 }
 
 .card.signin-card {

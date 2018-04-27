@@ -17,9 +17,4 @@ public class IndexController {
         model.addAttribute("gameDtos", gameService.getAll());
         return "/index";
     }
-
-    @GetMapping(value = "/login")
-    public String login() {
-        return "/fragments/login";
-    }
 }

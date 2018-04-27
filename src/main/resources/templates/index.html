@@ -29,6 +29,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th style="visibility : hidden"></th>
             <th>Game title</th>
             <th></th>
             <th>Price</th>
@@ -38,11 +39,13 @@
         </thead>
         <tbody th:each="gameDto:${gameDtos}">
         <tr class="text-center">
+            <td style="visibility : hidden" th:text="${gameDto.id}" class="gameId"></td>
             <td th:text="${gameDto.name}"></td>
             <td id="tableImage" class = "imageContainer">
                 <div>
                     <img class="img-off" th:src="${gameDto.imgPath}"/>
-                    <img class="img-on" src="images/addToCart1.png"/>
+                    <button style="background : url(images/addToCart1.png)" class = "img-on btnAdd">
+                    </button>
                 </div>
             </td>
             <td th:text="${gameDto.price}"></td>
@@ -53,6 +56,60 @@
         </tr>
         </tbody>
     </table>
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+        }
+        }
+        return "";
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    /*]]>*/
+    </script>
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+        $('.btnAdd').click(function saveData() {
+            var item=$(this).closest("tr").find('td.gameId')[0].innerHTML;
+            var itemList = getCookie("gameIds");
+            itemList += item + ", ";
+            setCookie("gameIds", itemList, 2);
+
+        });
+
+     /*]]>*/
+    </script>
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    window.onload = function () {
+    if (localStorage.getItem("hasCodeRunBefore") === null) {
+            $(document).ready(function() {
+                    document.cookie="gameIds=";
+             });
+            localStorage.setItem("hasCodeRunBefore", true);
+        }
+    }
+
+    /*]]>*/
+    </script>
+
 </div>
 </body>
 </html>

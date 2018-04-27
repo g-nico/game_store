@@ -26,11 +26,6 @@ public class User implements Serializable{
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<Purchase> purchases;
 
-    @NotNull(message = "error.username.notnull")
-    @Size(min=3, max=25)
-    @Column(unique = true)
-    private String username;
-
     @NotNull(message = "error.password.notnull")
     @Size(min=6, max=61)
     private String password;

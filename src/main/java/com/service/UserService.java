@@ -4,14 +4,18 @@ import com.model.frontObjects.UserDto;
 import com.repository.User;
 import com.repository.UserRepository;
 import com.utility.UserMapper;
+import com.websecurity.LoggedUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -39,5 +43,16 @@ public class UserService {
 
     public void deleteUser(Long id) {
         userRepository.delete(id);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        User u = userRepository.findUserByEmail(s);
+
+        if (u == null) {
+            throw new UsernameNotFoundException(s);
+        }
+
+        return new LoggedUser(u.getEmail(), u.getRole());
     }
 }
