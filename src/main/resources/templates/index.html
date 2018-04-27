@@ -15,6 +15,8 @@
     <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
             th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
 
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="../static/css/main.css" th:href="@{/css/main.css}"/>
 
     <script src="../../static/js/bootstrap.min.js"
             th:src="@{~/js/bootstrap.min.js}"></script>
@@ -22,7 +24,7 @@
 <body id="#homepage">
 <div th:include="fragments/header :: header"></div>
 
-<h2 >Welcome</h2>
+<h2>Welcome</h2>
 <div class="container table-responsive">
     <table class="table">
         <thead>
@@ -35,14 +37,17 @@
         </tr>
         </thead>
         <tbody th:each="gameDto:${gameDtos}">
-        <tr>
+        <tr class="text-center">
             <td th:text="${gameDto.name}"></td>
-            <td >
-                <img src="${gameDto.imgPath}"/>
+            <td id="tableImage" class = "imageContainer">
+                <div>
+                    <img class="img-off" th:src="${gameDto.imgPath}"/>
+                    <img class="img-on" src="images/addToCart1.png"/>
+                </div>
             </td>
             <td th:text="${gameDto.price}"></td>
             <td>
-                <input type="checkbox" th:checked="${game.inStock}" disabled="true"/>
+                <input type="checkbox" th:checked="${gameDto.inStock}" disabled="true"/>
             </td>
             <td th:text="${gameDto.genre}"></td>
         </tr>
