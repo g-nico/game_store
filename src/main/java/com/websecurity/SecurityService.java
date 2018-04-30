@@ -1,5 +1,6 @@
 package com.websecurity;
 
+import com.model.frontObjects.LoginDto;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +10,11 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 @Service
 public class SecurityService {
@@ -33,14 +38,41 @@ public class SecurityService {
         return  authProvider;
     }
 
-    public void login(String email, String password) {
-        UserDetails userDetails = userService.loadUserByUsername(email);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
+    @Lazy
+    @Bean
+    public String encodePassword(String passwd) {
+        return this.encoder().encode(passwd);
+    }
 
-        this.daoAuthenticationProvider().authenticate(usernamePasswordAuthenticationToken);
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder(5);
 
-        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+    }
+
+    public void login(final LoginDto loginDto) {
+        if(validateLoginFields(loginDto)) {
+
+            UserDetails userDetails = userService.loadUserByUsername(loginDto.getEmail());
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, loginDto.getPassword(), userDetails.getAuthorities());
+
+            this.daoAuthenticationProvider().authenticate(usernamePasswordAuthenticationToken);
+
+            if (usernamePasswordAuthenticationToken.isAuthenticated()) {
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
         }
+    }
+
+    private boolean validateLoginFields(final LoginDto loginDto) {
+        if (userService.getUserByEmail(loginDto.getEmail()) == null) {
+            return false;
+        }
+
+        return (loginDto.getPassword().equals(userService.getUserByEmail(loginDto.getEmail()).getPassword()));
+    }
+
+    private boolean doPasswordsMatch(final String raw, final String encoded) {
+        return encoder().matches(raw, encoded);
     }
 }

@@ -55,4 +55,12 @@ public class UserService implements UserDetailsService {
 
         return new LoggedUser(u.getEmail(), u.getRole());
     }
+
+    public UserDto getUserByEmail(String email) {
+        UserDto userDto = new UserDto();
+        User u = userRepository.findUserByEmail(email);
+        UserMapper.toUserDto(u, userDto);
+
+        return userDto;
+    }
 }

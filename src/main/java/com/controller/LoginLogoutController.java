@@ -4,8 +4,10 @@ import com.model.frontObjects.LoginDto;
 import com.websecurity.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class LoginLogoutController {
@@ -14,7 +16,16 @@ public class LoginLogoutController {
     private SecurityService securityService;
 
     @PostMapping(value = "/login")
-    public void login(@RequestBody LoginDto loginDto) {
-        securityService.login(loginDto.getEmail(), loginDto.getPassword());
+    public String login(@ModelAttribute(value = "loginDto") LoginDto loginDto) {
+        securityService.login(loginDto);
+
+        return "/";
+    }
+
+    @GetMapping(value = "/login")
+    public String login(Model model) {
+        model.addAttribute("loginDto", new LoginDto());
+
+        return "fragments/login";
     }
 }

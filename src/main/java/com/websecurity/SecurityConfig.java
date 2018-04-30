@@ -1,5 +1,6 @@
 package com.websecurity;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
         jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
+    @Autowired
+    private CustomAuthenticationSuccessHandler cash;
+
+    @Autowired
+    private CustomAuthenticationEntryPoint caep;
+
+    @Autowired
+    private CustomAuthFailureHandler cafh;
+
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
@@ -24,8 +34,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .antMatchers("/login","/resources/**", "/").permitAll()
                 .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .defaultSuccessUrl("/")
-                    .failureUrl("/login");
+                    .failureHandler(cafh)
+                    .successHandler(cash)
+                    .loginPage("/login.html")
+                    .loginProcessingUrl("login")
+                    .defaultSuccessUrl("/", true)
+                    .failureUrl("/login")
+                .and()
+                .httpBasic()
+                    .authenticationEntryPoint(caep);
     }
 }
