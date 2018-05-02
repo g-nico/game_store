@@ -6,7 +6,9 @@ import lombok.ToString;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -14,11 +16,10 @@ import java.util.List;
 @Component
 public class CartDto {
 
-    private List<GameDto> games;
-    private String sessionId;
+    private Map<GameDto, Long> games;
 
     public CartDto() {
-        games = new ArrayList<>();
+        games = new HashMap<>();
     }
 }
 

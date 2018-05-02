@@ -40,15 +40,4 @@ public class PurchaseController {
         purchaseService.deletePurchase(id);
     }
 
-    @GetMapping(value = "myCart")
-    public String addToMyCart(@CookieValue("gameIds") String cookie) {
-        String[] ids = cookie.split(",");
-        List<Long> ids1 = new ArrayList<>();
-        for (String id : ids) {
-            if (!id.equals("")) {
-                ids1.add(new Long(id));
-            }
-        }
-        return gameService.getCart(ids1).toString();
-    }
 }

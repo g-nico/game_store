@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.sprinfgramework.org/schema/security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.sprinfgramework.org/schema/security"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Game Store</title>
 
@@ -36,11 +37,12 @@
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="/">Home</a> </li>
-                    <li><a href="/login">Login</a> </li>
-                    <li><a href="/myAccount">My Account</a> </li>
-                    <li><a href="/purchases/myCart">My Cart</a></li>
-                    <li><a href="/purchases">Purchases</a> </li>
-                    <li><a href="/accounts">Accounts</a> </li>
+                    <li sec:authorize="isAnonymous()"><a href="/login">Login</a> </li>
+                    <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a> </li>
+                    <li sec:authorize="isAuthenticated()"><a href="/myAccount">My Account</a> </li>
+                    <li><a href="myCart">My Cart</a></li>
+                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a href="/purchases">Purchases</a> </li>
+                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a href="/accounts">Accounts</a> </li>
                 </ul>
             </div>
         </div>

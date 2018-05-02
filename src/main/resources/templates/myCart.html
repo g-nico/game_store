@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Game Store</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://fonts.googleapis.com/css?family=Lato"
+          rel="stylesheet" type="text/css"/>
+    <link href="http://fonts.googleapis.com/css?family=Montserrat"
+          rel="stylesheet" type="text/css"/>
+    <link
+            href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+            rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="../static/css/main.css" th:href="@{/css/main.css}"/>
+
+    <script src="../../static/js/bootstrap.min.js"
+            th:src="@{~/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:include="fragments/header :: header"></div>
+
+<h2>Your Cart</h2>
+<div class="container table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th> Game title</th>
+                <th> Pcs</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="cartDto" th:each="game:${cartDto.games}">
+            <tr>
+                <td th:text="${game.key.name}"></td>
+                <td th:text="${game.value}"></td>
+                <td>
+                    <form class="col-md-4" th:method="DELETE" th:action="@{/myCart/delete/{name}(name=${game.key.name})}"
+                          style="height: 100%;width: 50%;">
+                        <button type="submit" name="submit" value="value">Remove</button>
+                    </form>
+
+                    <!--<a th:href="@{/myCart/edit/{id}(id=${game.id})}" class="col-md-4 link-button"></a>-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

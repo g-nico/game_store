@@ -53,14 +53,17 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException(s);
         }
 
-        return new LoggedUser(u.getEmail(), u.getRole());
+        return new LoggedUser(u.getEmail(), u.getRole(), u.getPassword());
     }
 
     public UserDto getUserByEmail(String email) {
         UserDto userDto = new UserDto();
         User u = userRepository.findUserByEmail(email);
-        UserMapper.toUserDto(u, userDto);
 
-        return userDto;
+        if(u != null) {
+            UserMapper.toUserDto(u, userDto);
+            return userDto;
+        }
+        return null;
     }
 }

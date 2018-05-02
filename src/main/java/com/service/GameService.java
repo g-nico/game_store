@@ -1,5 +1,6 @@
 package com.service;
 
+import com.model.frontObjects.CartDto;
 import com.model.frontObjects.GameDto;
 import com.repository.Game;
 import com.repository.GameRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
@@ -32,6 +34,18 @@ public class GameService {
         return gameDtos;
     }
 
+    public GameDto getOne(final Long id) {
+        Game g = gameRepository.getOne(id);
+        GameDto gameDto = new GameDto();
+
+        GameMapper.toGameDto(g, gameDto);
+        return gameDto;
+    }
+
+    public String getGameName(final Long id) {
+        return this.getOne(id).getName();
+    }
+
     public void updateGame(final GameDto gameDto) {
         Game g = gameRepository.getOne(gameDto.getId());
         GameMapper.updateGame(gameDto, g);
@@ -40,13 +54,5 @@ public class GameService {
 
     public void deleteGame(final Long id) {
         gameRepository.delete(id);
-    }
-
-    public List<GameDto> getCart(final List<Long> ids) {
-        List<Game> games = gameRepository.findAll(ids);
-        List<GameDto> gameDtos = new ArrayList<>();
-        gameDtos = GameMapper.toGameDtoList(games, gameDtos);
-
-        return gameDtos;
     }
 }

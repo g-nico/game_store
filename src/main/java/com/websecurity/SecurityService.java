@@ -12,9 +12,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Service
 public class SecurityService {
@@ -50,7 +52,7 @@ public class SecurityService {
 
     }
 
-    public void login(final LoginDto loginDto) {
+    public boolean login(final LoginDto loginDto) {
         if(validateLoginFields(loginDto)) {
 
             UserDetails userDetails = userService.loadUserByUsername(loginDto.getEmail());
@@ -61,6 +63,19 @@ public class SecurityService {
             if (usernamePasswordAuthenticationToken.isAuthenticated()) {
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
+            return true;
+        }
+        return false;
+    }
+
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if(auth != null) {
+            SecurityContextLogoutHandler sch = new SecurityContextLogoutHandler();
+            sch.setInvalidateHttpSession(true);
+            sch.setClearAuthentication(true);
+            sch.logout(request, response, auth);
         }
     }
 

@@ -16,11 +16,13 @@ import java.util.stream.Stream;
 public class LoggedUser implements UserDetails{
 
     private String email;
+    private String password;
     private Set<GrantedAuthority> grantedAuthorities;
 
     @Autowired
-    public LoggedUser(String email, RoleEnum roleEnum) {
+    public LoggedUser(String email, RoleEnum roleEnum, String password) {
         this.email = email;
+        this.password = password;
 
         this.grantedAuthorities = Stream.of(roleEnum)
                 .map(r -> new SimpleGrantedAuthority(r.name()))
@@ -34,7 +36,7 @@ public class LoggedUser implements UserDetails{
 
     @Override
     public String getPassword() {
-        return null;
+        return this.password;
     }
 
     @Override
