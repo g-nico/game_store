@@ -28,28 +28,79 @@
 <div class="container table-responsive">
     <table class="table">
         <thead>
-            <tr>
-                <th> Game title</th>
-                <th> Pcs</th>
-                <th></th>
-            </tr>
+        <tr>
+            <th style="visibility : hidden"></th>
+            <th> Game title</th>
+            <th> Pcs</th>
+            <th></th>
+        </tr>
         </thead>
         <tbody id="cartDto" th:each="game:${cartDto.games}">
-            <tr>
-                <td th:text="${game.key.name}"></td>
-                <td th:text="${game.value}"></td>
-                <td>
-                    <form class="col-md-4" th:method="DELETE" th:action="@{/myCart/delete/{name}(name=${game.key.name})}"
-                          style="height: 100%;width: 50%;">
-                        <button type="submit" name="submit" value="value">Remove</button>
-                    </form>
 
-                    <!--<a th:href="@{/myCart/edit/{id}(id=${game.id})}" class="col-md-4 link-button"></a>-->
-                </td>
-            </tr>
+        <tr>
+            <td class="gameId" style="visibility : hidden" th:text="${game.key.id}"></td>
+            <td th:text="${game.key.name}"></td>
+            <td th:text="${game.value}"></td>
+            <td>
+                <button class="btnRemove" type="submit" name="submit" value="value">Remove</button>
+
+                <!--<a th:href="@{/myCart/edit/{id}(id=${game.id})}" class="col-md-4 link-button"></a>-->
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    /*]]>*/
+
+
+</script>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+        $('.btnRemove').click(function saveData() {
+            var item=$(this).closest("tr").find('td.gameId')[0].innerHTML;
+            var itemList = getCookie("gameIds");
+            var gameIdList = itemList.split(',');
+            var newGamesList = "";
+
+            for(var i = 0; i < gameIdList.length; i++) {
+                var id = gameIdList[i];
+                if(id != '') {
+                    if(String(id) != item) newGamesList += id + ",";
+                }
+            }
+            console.log(newGamesList);
+            setCookie("gameIds", newGamesList, 2);
+        });
+
+     /*]]>*/
+
+
+</script>
 
 </body>
 </html>
