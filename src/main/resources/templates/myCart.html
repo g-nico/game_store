@@ -93,8 +93,9 @@
                     if(String(id) != item) newGamesList += id + ",";
                 }
             }
-            console.log(newGamesList);
+
             setCookie("gameIds", newGamesList, 2);
+            window.location.reload();
         });
 
      /*]]>*/

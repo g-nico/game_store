@@ -22,7 +22,7 @@ public class LoginLogoutController {
     public String login(@ModelAttribute(value = "loginDto") LoginDto loginDto) {
         if(securityService.login(loginDto))
             return "redirect:/";
-        else return "redirect:/login";
+        else return "redirect:/myCart";
     }
 
     @GetMapping(value = "/login")

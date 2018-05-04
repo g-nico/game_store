@@ -37,6 +37,7 @@ public class SecurityService {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setForcePrincipalAsString(false);
         authProvider.setUserDetailsService(userService);
+        authProvider.setPasswordEncoder(encoder());
         return  authProvider;
     }
 
@@ -84,7 +85,7 @@ public class SecurityService {
             return false;
         }
 
-        return (loginDto.getPassword().equals(userService.getUserByEmail(loginDto.getEmail()).getPassword()));
+        return (doPasswordsMatch(loginDto.getPassword(), userService.getUserByEmail(loginDto.getEmail()).getPassword()));
     }
 
     private boolean doPasswordsMatch(final String raw, final String encoded) {

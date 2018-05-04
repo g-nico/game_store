@@ -1,6 +1,9 @@
 package com.controller;
 
+import com.model.frontObjects.UserDto;
 import com.service.GameService;
+import com.service.UserService;
+import com.websecurity.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
