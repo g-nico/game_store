@@ -41,8 +41,8 @@
                     <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a> </li>
                     <li sec:authorize="isAuthenticated()"><a href="/users/myAccount">My Account</a> </li>
                     <li><a href="/myCart">My Cart</a></li>
-                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a href="/purchases">Purchases</a> </li>
-                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a href="/accounts">Accounts</a> </li>
+                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a href="/purchases/getAllPurchases">Purchases</a> </li>
+                    <li sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a href="/users/getAllUsers">Accounts</a> </li>
                 </ul>
             </div>
         </div>

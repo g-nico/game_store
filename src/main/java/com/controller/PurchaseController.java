@@ -4,12 +4,11 @@ import com.model.frontObjects.PurchaseDto;
 import com.service.GameService;
 import com.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@RestController
+@Controller
 @RequestMapping(value = "purchases")
 public class PurchaseController {
 
@@ -25,8 +24,10 @@ public class PurchaseController {
     }
 
     @GetMapping(value = "getAllPurchases")
-    public List<PurchaseDto> getAllPurchases(){
-        return purchaseService.getAll();
+    public String getAllPurchases(Model model){
+        model.addAttribute("purchaseDtos", purchaseService.getAll());
+
+        return "purchases/purchasesAdminPage";
     }
 
     @PutMapping(value = "updatePurchase")

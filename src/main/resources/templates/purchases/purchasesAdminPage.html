@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Game Store</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://fonts.googleapis.com/css?family=Lato"
+          rel="stylesheet" type="text/css"/>
+    <link href="http://fonts.googleapis.com/css?family=Montserrat"
+          rel="stylesheet" type="text/css"/>
+    <link
+            href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+            th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+            rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen"
+          href="../static/css/main.css" th:href="@{/css/main.css}"/>
+
+    <script src="../../static/js/bootstrap.min.js"
+            th:src="@{~/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+<div th:include="fragments/header :: header"></div>
+
+<h2>Welcome</h2>
+<div class="container table-responsive">
+    <table class="table">
+        <thead>
+        <tr>
+            <th style="visibility : hidden"></th>
+            <!-- TODO: get user's name -->
+            <th>User id</th>
+            <th>Purchase Date</th>
+            <th>Games</th>
+            <th>Final price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody th:each="purchaseDto:${purchaseDtos}">
+        <tr >
+            <td style="visibility : hidden" th:text="${purchaseDto.id}"></td>
+            <td th:text="${purchaseDto.userId}"></td>
+            <td th:text="${purchaseDto.purchaseDate}"></td>
+            <td th:text="${purchaseDto.games}"></td>
+            <td th:text="${purchaseDto.finalPrice}"></td>
+            <td>
+                <button class="btnRemove" type="submit" name="submit" value="value">Remove</button>
+                <button class="btnRemove" type="submit" name="submit" value="value">Edit</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

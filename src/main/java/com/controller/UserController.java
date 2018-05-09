@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
 @RequestMapping(value = "users")
 public class UserController {
@@ -30,8 +28,10 @@ public class UserController {
     }
 
     @GetMapping(value = "getAllUsers")
-    public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
+    public String getAllUsers(Model model) {
+        model.addAttribute("userDtos", userService.getAllUsers());
+
+        return "users/adminUserPage";
     }
 
     @PostMapping(value = "/register")

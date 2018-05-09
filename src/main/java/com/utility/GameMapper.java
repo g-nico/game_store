@@ -2,10 +2,12 @@ package com.utility;
 
 import com.model.frontObjects.GameDto;
 import com.repository.Game;
+import lombok.experimental.UtilityClass;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class GameMapper {
 
     public static void toGameDto(Game game, GameDto gameDto) {

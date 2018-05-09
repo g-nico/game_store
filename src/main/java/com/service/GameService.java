@@ -1,6 +1,5 @@
 package com.service;
 
-import com.model.frontObjects.CartDto;
 import com.model.frontObjects.GameDto;
 import com.repository.Game;
 import com.repository.GameRepository;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class GameService {

@@ -3,6 +3,7 @@ package com.controller;
 import com.model.frontObjects.CartDto;
 import com.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class CartController {
 
     @GetMapping(value = "myCart")
     public @ModelAttribute("cartDto")
-    CartDto addToMyCart(@CookieValue("gameIds") String cookie, Model model) {
-        if (cookie.equals("")) {
+    CartDto addToMyCart(@CookieValue(value = "gameIds", required = false)  String cookie, Model model) {
+        if (cookie == null || "".equals(cookie)) {
             return new CartDto();
         }
         String[] ids = cookie.split(",");
