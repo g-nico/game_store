@@ -32,6 +32,7 @@
             <th style="visibility : hidden"></th>
             <th> Game title</th>
             <th> Pcs</th>
+            <th> Price</th>
             <th></th>
         </tr>
         </thead>
@@ -41,6 +42,7 @@
             <td class="gameId" style="visibility : hidden" th:text="${game.key.id}"></td>
             <td th:text="${game.key.name}"></td>
             <td th:text="${game.value}"></td>
+            <td th:text="${game.key.price}"></td>
             <td>
                 <button class="btnRemove" type="submit" name="submit" value="value">Remove</button>
 
@@ -49,6 +51,11 @@
         </tr>
         </tbody>
     </table>
+    <hr/>
+
+    <div >
+        <p id="finalPrice">Final price: </p>
+    </div>
 </div>
 
 <script th:inline="javascript">
@@ -58,10 +65,10 @@
         var ca = document.cookie.split(';');
         for(var i = 0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0) == ' ') {
+            while (c.charAt(0) === ' ') {
                 c = c.substring(1);
             }
-            if (c.indexOf(name) == 0) {
+            if (c.indexOf(name) === 0) {
                 return c.substring(name.length, c.length);
             }
         }
@@ -99,8 +106,13 @@
         });
 
      /*]]>*/
+</script>
 
-
+<script th:inline="javascript">
+    $('.cartDto').change(function () {
+        var gamePrices = document.getElementById("gamePrice");
+        console.log(gamePrices);
+    });
 </script>
 
 </body>
