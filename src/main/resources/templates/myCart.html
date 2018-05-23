@@ -42,7 +42,7 @@
             <td class="gameId" style="visibility : hidden" th:text="${game.key.id}"></td>
             <td th:text="${game.key.name}"></td>
             <td th:text="${game.value}"></td>
-            <td th:text="${game.key.price}"></td>
+            <td class="gamePrice" th:text="${game.key.price}"></td>
             <td>
                 <button class="btnRemove" type="submit" name="submit" value="value">Remove</button>
 
@@ -53,7 +53,7 @@
     </table>
     <hr/>
 
-    <div >
+    <div>
         <p id="finalPrice">Final price: </p>
     </div>
 </div>
@@ -106,13 +106,16 @@
         });
 
      /*]]>*/
+
 </script>
 
 <script th:inline="javascript">
-    $('#cartDto').change(function () {
-        var gamePrices = document.getElementById("gamePrice");
+/*<![CDATA[*/
+    $(document).ready(function () {
+        var gamePrices = document.getElementsByClassName("gamePrice");
         console.log(gamePrices);
     });
+ /*]]>*/
 </script>
 
 </body>
