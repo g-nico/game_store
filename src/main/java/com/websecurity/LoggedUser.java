@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Getter
-public class LoggedUser implements UserDetails{
+public class LoggedUser implements UserDetails {
 
     private String email;
     private String password;

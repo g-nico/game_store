@@ -41,9 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .failureUrl("/login")
                     .defaultSuccessUrl("/")
                 .and()
-                .logout()
+/*                .logout()
                     .deleteCookies("gameIds")
-                .and()
+                .and()*/
                 .httpBasic()
                     .authenticationEntryPoint(caep);
     }

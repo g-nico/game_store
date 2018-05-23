@@ -57,7 +57,10 @@ public class SecurityService {
         if(validateLoginFields(loginDto)) {
 
             UserDetails userDetails = userService.loadUserByUsername(loginDto.getEmail());
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, loginDto.getPassword(), userDetails.getAuthorities());
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                    new UsernamePasswordAuthenticationToken(userDetails,
+                            loginDto.getPassword(),
+                            userDetails.getAuthorities());
 
             this.daoAuthenticationProvider().authenticate(usernamePasswordAuthenticationToken);
 
