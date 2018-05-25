@@ -1,8 +1,11 @@
 package com.utility;
 
 import com.model.frontObjects.PurchaseDto;
+import com.repository.GameRepository;
 import com.repository.Purchase;
+import com.service.GameService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,11 +24,14 @@ public class PurchaseMapper {
         purchase.setFinalPrice(purchaseDto.getFinalPrice());
     }
 
-    public static List<PurchaseDto> toPurchaseDtoList(final List<Purchase> purchases, List<PurchaseDto> purchaseDtos) {
+    public static List<PurchaseDto> toPurchaseDtoList(final List<Purchase> purchases,
+                                                      List<PurchaseDto> purchaseDtos) {
         purchaseDtos = purchases.stream()
                 .map(purchase -> {
                     PurchaseDto purchaseDto = new PurchaseDto();
                     PurchaseMapper.toPurchaseDto(purchase, purchaseDto);
+                    purchaseDto.getGames().addAll(GameMapper.toGameDtoList(purchase.getGames(), new ArrayList<>()));
+
                     return purchaseDto;
                 })
                 .collect(Collectors.toList());

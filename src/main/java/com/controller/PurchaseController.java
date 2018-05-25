@@ -1,6 +1,10 @@
 package com.controller;
 
+import com.model.frontObjects.CartDto;
+import com.model.frontObjects.GameDto;
 import com.model.frontObjects.PurchaseDto;
+import com.repository.Game;
+import com.service.CartService;
 import com.service.GameService;
 import com.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,19 +12,37 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @Controller
 @RequestMapping(value = "purchases")
 public class PurchaseController {
 
-    @Autowired
-    private PurchaseService purchaseService;
+    private final PurchaseService purchaseService;
+    private final CartService cartService;
+    private final GameService gameService;
 
     @Autowired
-    private GameService gameService;
+    public PurchaseController(final PurchaseService purchaseService,
+                              final GameService gameService,
+                              final CartService cartService) {
+        this.cartService = cartService;
+        this.purchaseService = purchaseService;
+        this.gameService = gameService;
+    }
 
-    @PostMapping(value = "savePurchase")
-    public PurchaseDto savePurchase(@RequestBody PurchaseDto purchaseDto) {
-        return purchaseService.savePurchase(purchaseDto);
+    @GetMapping(value = "savePurchase")
+    public String savePurchase(@CookieValue(value = "gameIds", required = false)  String cookie) {
+        final CartDto cartDto = cartService.getCart(cookie);
+        final PurchaseDto purchaseDto = new PurchaseDto();
+
+        for(Map.Entry<GameDto, Long> k : cartDto.getGames().entrySet()) {
+            for(int i = 0; i < k.getValue(); i++)
+                purchaseDto.getGames().add(k.getKey());
+        }
+
+        purchaseService.savePurchase(purchaseDto);
+        return "/index";
     }
 
     @GetMapping(value = "getAllPurchases")

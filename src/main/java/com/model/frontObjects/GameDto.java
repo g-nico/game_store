@@ -12,7 +12,7 @@ public class GameDto {
 
     private Long id;
     private String name;
-    private Float price;
+    private Double price;
     private Boolean inStock;
     private Genre genre;
     private String imgPath;

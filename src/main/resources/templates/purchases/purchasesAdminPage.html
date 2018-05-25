@@ -36,20 +36,19 @@
             <th>Purchase Date</th>
             <th>Games</th>
             <th>Final price</th>
-            <th>Action</th>
         </tr>
         </thead>
         <tbody th:each="purchaseDto:${purchaseDtos}">
-        <tr >
+        <tr>
             <td style="visibility : hidden" th:text="${purchaseDto.id}"></td>
             <td th:text="${purchaseDto.userId}"></td>
             <td th:text="${purchaseDto.purchaseDate}"></td>
-            <td th:text="${purchaseDto.games}"></td>
-            <td th:text="${purchaseDto.finalPrice}"></td>
             <td>
-                <button class="btnRemove" type="submit" name="submit" value="value">Remove</button>
-                <button class="btnRemove" type="submit" name="submit" value="value">Edit</button>
+                <ul th:each="game:${purchaseDto.games}">
+                    <li th:text="${game.getName()}"></li>
+                </ul>
             </td>
+            <td th:text="${purchaseDto.finalPrice}"></td>
         </tr>
         </tbody>
     </table>

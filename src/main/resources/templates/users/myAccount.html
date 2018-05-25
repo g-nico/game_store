@@ -18,6 +18,30 @@
 
     <script src="../../static/js/bootstrap.min.js"
             th:src="@{~/js/bootstrap.min.js}"></script>
+    <script th:inline="javascript">
+        $(document).ready(function () {
+            $("#password").prop('required', false);
+            $("#confirmPassword").prop('required', false);
+            disableInputs();
+
+
+            $("#editButton").click(function () {
+                $('#userFormContainer input').prop('readonly', false);
+                $("#saveButton").prop('disabled', false);
+
+            });
+        });
+
+        function disableInputs() {
+            $('#passwordContainer').hide();
+            $('#confirmPasswordContainer').hide();
+            $('#userFormContainer input').prop('readonly', true);
+
+            var userData = [[${userData}]];
+            $("#saveButton").prop('disabled', true);
+        }
+    </script>
+
 </head>
 <body>
 <div th:include="fragments/header :: header"></div>
@@ -25,11 +49,12 @@
     <h3 class="text-center">My Account</h3>
 
     <div class="row">
-        <form action="#" th:action="@{/myAccount}" th:object="${userDto}" method="post" class="form-horizontal"
+        <form action="#" th:action="@{/users/updateUser}" th:object="${userDto}" th:method="put" class="form-horizontal"
               id="userFormContainer">
             <div th:include="fragments/userForm :: userForm"></div>
             <div class="col-md-4 text-center">
-                <button type="submit" class="btn btn-primary btn-lg btn-success pull-right" id="saveButton">Save
+                <button type="submit" class="btn btn-primary btn-lg btn-success pull-right" id="saveButton">
+                    Save
                 </button>
             </div>
 

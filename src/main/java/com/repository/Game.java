@@ -26,6 +26,9 @@ public class Game implements Serializable{
     @ManyToMany(mappedBy = "games")
     private List<Purchase> purchases;
 
+    @OneToMany(mappedBy = "game", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    private List<GameReview> gameReviews;
+
     @NotNull
     @Column(unique = true)
     private String name;
@@ -34,12 +37,13 @@ public class Game implements Serializable{
     private Integer stock;
 
     @Min(value = 0, message = "Price cannot be negative")
-    private Float price;
+    private Double price;
 
     private Genre genre;
     private String imgPath;
 
     public Game() {
         purchases = new ArrayList<>();
+        gameReviews = new ArrayList<>();
     }
 }

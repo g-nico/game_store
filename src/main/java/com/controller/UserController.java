@@ -41,9 +41,10 @@ public class UserController {
     }
 
     @PutMapping(value = "updateUser")
-    public void updateUser(@RequestParam Long id, @RequestBody UserDto userDto) {
-        userDto.setId(id);
+    public String updateUser(@RequestParam Long id, @ModelAttribute(value = "userDto") UserDto userDto) {
         userService.updateUser(userDto);
+
+        return "redirect:/users/myAccount";
     }
 
     @DeleteMapping(value = "deleteUser")

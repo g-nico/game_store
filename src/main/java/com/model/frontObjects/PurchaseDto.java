@@ -18,7 +18,7 @@ public class PurchaseDto {
     private Long userId;
     private Date purchaseDate;
     private List<GameDto> games;
-    private Float finalPrice;
+    private Double finalPrice;
 
     public PurchaseDto() {
         games = new ArrayList<>();

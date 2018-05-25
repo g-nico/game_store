@@ -15,26 +15,25 @@ import java.util.stream.Collectors;
 @Controller
 public class CartController {
 
+    private final CartService cartService;
+
     @Autowired
-    private CartService cartService;
+    public CartController(final CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @GetMapping(value = "myCart")
     public @ModelAttribute("cartDto")
-    CartDto addToMyCart(@CookieValue(value = "gameIds", required = false)  String cookie, Model model) {
+    CartDto addToMyCart(@CookieValue(value = "gameIds", required = false)  String cookie,
+                        Model model) {
         if (cookie == null || "".equals(cookie)) {
             return new CartDto();
         }
-        String[] ids = cookie.split(",");
-        List<Long> ids1;
 
-        ids1 = Arrays.stream(ids)
-                .map(id -> {
-                    id = id.replaceAll("\\s", "");
-                    return id;
-                })
-                .map(Long::new)
-                .collect(Collectors.toList());
-        return cartService.getCart(ids1);
+        final CartDto cartDto = cartService.getCart(cookie);
+        model.addAttribute("cartDto", cartDto);
+
+        return cartDto;
     }
 
     @DeleteMapping(value = "myCart/delete/{name}")

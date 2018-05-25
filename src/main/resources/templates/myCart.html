@@ -25,45 +25,47 @@
 <div th:include="fragments/header :: header"></div>
 
 <h2>Your Cart</h2>
-<div class="container table-responsive">
-    <table class="table">
-        <thead>
-        <tr>
-            <th style="visibility : hidden"></th>
-            <th> Game title</th>
-            <th> Pcs</th>
-            <th> Price</th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody id="cartDto" th:each="game:${cartDto.games}">
+<form th:object="${cartDto}" th:method="get" th:action="@{/purchases/savePurchase}">
+    <div class="container table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th style="visibility : hidden"></th>
+                <th> Game title</th>
+                <th> Pcs</th>
+                <th> Price</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="cartDto" th:each="game:${cartDto.games}">
 
-        <tr>
-            <td class="gameId" style="visibility : hidden" th:text="${game.key.id}"></td>
-            <td th:text="${game.key.name}"></td>
-            <td th:text="${game.value}"></td>
-            <td class="gamePrice" th:text="${game.key.price}"></td>
-            <td>
-                <button class="btnRemove" type="submit" name="submit" value="value">Remove</button>
+            <tr>
+                <td class="gameId" style="visibility : hidden" th:text="${game.key.id}"></td>
+                <td th:text="${game.key.name}"></td>
+                <td class="gameQt" th:text="${game.value}"></td>
+                <td class="gamePrice" th:text="${game.key.price}"></td>
+                <td>
+                    <button th:type="button" type="button" class="btnRemove" name="action" value="remove">Remove</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <hr/>
 
-                <!--<a th:href="@{/myCart/edit/{id}(id=${game.id})}" class="col-md-4 link-button"></a>-->
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <hr/>
-
-    <div>
-        <p id="finalPrice">Final price: </p>
+        <div style="display: block;margin: auto;">
+            <p class="col-md-2">Final price: <label id="finalPriceText"></label></p>
+            <button type="submit" name="action" value="purchase" class="btn col-md-2" >
+                Purchase </button>
+        </div>
     </div>
-</div>
+</form>
 
 <script th:inline="javascript">
     /*<![CDATA[*/
     function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
-        for(var i = 0; i < ca.length; i++) {
+        for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
             while (c.charAt(0) === ' ') {
                 c = c.substring(1);
@@ -78,9 +80,10 @@
     function setCookie(cname, cvalue, exdays) {
         var d = new Date();
         d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires="+d.toUTCString();
+        var expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
     }
+
     /*]]>*/
 
 
@@ -88,34 +91,42 @@
 
 <script th:inline="javascript">
     /*<![CDATA[*/
-        $('.btnRemove').click(function saveData() {
-            var item=$(this).closest("tr").find('td.gameId')[0].innerHTML;
-            var itemList = getCookie("gameIds");
-            var gameIdList = itemList.split(',');
-            var newGamesList = "";
+    $('.btnRemove').click(function saveData() {
+        var item = $(this).closest("tr").find('td.gameId')[0].innerHTML;
+        var itemList = getCookie("gameIds");
+        var gameIdList = itemList.split(',');
+        var newGamesList = "";
 
-            for(var i = 0; i < gameIdList.length; i++) {
-                var id = gameIdList[i];
-                if(id != '') {
-                    if(String(id) != item) newGamesList += id + ",";
-                }
+        for (var i = 0; i < gameIdList.length; i++) {
+            var id = gameIdList[i];
+            if (id !== '') {
+                if (String(id) !== item) newGamesList += id + ",";
             }
+        }
 
-            setCookie("gameIds", newGamesList, 2);
-            window.location.reload();
-        });
+        setCookie("gameIds", newGamesList, 2);
+        window.location.reload();
+    });
 
-     /*]]>*/
+    /*]]>*/
 
 </script>
 
 <script th:inline="javascript">
-/*<![CDATA[*/
+    /*<![CDATA[*/
     $(document).ready(function () {
         var gamePrices = document.getElementsByClassName("gamePrice");
-        console.log(gamePrices);
+        var gameQuantities = document.getElementsByClassName("gameQt");
+        var finalPrice = 0.0;
+
+        for (var i = 0; i < gamePrices.length; i++) {
+            finalPrice += gamePrices[i].innerHTML * gameQuantities[i].innerHTML;
+        }
+
+        console.log(finalPrice);
+        document.getElementById('finalPriceText').innerText = String(finalPrice);
     });
- /*]]>*/
+    /*]]>*/
 </script>
 
 </body>
