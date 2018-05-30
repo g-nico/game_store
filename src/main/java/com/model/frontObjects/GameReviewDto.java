@@ -11,8 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 public class GameReviewDto {
 
+    private Long id;
     private String user;
     private String game;
+    private String gamePhoto;
     private List<String> comments;
 
 }

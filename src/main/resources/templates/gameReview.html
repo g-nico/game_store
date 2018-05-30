@@ -22,39 +22,18 @@
             th:src="@{~/js/bootstrap.min.js}"></script>
 </head>
 <body>
-
 <div th:include="fragments/header :: header"></div>
 
-<h2>Welcome</h2>
-<div class="container table-responsive">
-    <table class="table">
-        <thead>
-        <tr>
-            <th style="visibility : hidden"></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Address</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <tbody th:each="userDto:${userDtos}">
-        <tr >
-            <td style="visibility : hidden" th:text="${userDto.id}"></td>
-            <td th:text="${userDto.name}"></td>
-            <td th:text="${userDto.email}"></td>
-            <td th:text="${userDto.address}"></td>
-            <td>
-            <form class="col-md-4" method="POST" th:action="@{/users/deleteUser/{id}(id=${userDto.id})}"
-                      style="height: 100%;width: 50%;">
-                <button type="submit" name="submit" value="value">Remove</button>
-            </form>
+    <div class="container col-md-3">
+        <img class="img-off" th:src="${review.gamePhoto}"/>
+    </div>
+    <div class="container col-md-9">
+        <ul th:each="comment:${review.comments}">
+            <li th:text="${comment}"></li>
+        </ul>
+    </div>
 
-                <!--<button class="btnRemove" type="submit" name="submit" value="value">Edit</button>-->
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<hr/>
 
 </body>
 </html>

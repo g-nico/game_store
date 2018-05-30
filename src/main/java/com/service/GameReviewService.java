@@ -1,5 +1,6 @@
 package com.service;
 
+import com.model.frontObjects.GameDto;
 import com.model.frontObjects.GameReviewDto;
 import com.repository.*;
 import com.utility.GameReviewMapper;
@@ -26,14 +27,14 @@ public class GameReviewService {
 
     public List<GameReviewDto> getAll() {
         final List<GameReview> gameReviews = gameReviewRepository.findAll();
-        List<GameReviewDto> gameReviewDtos = new ArrayList<>();
+        final List<GameReviewDto> gameReviewDtos = new ArrayList<>();
 
         GameReviewMapper.toDtoList(gameReviews, gameReviewDtos);
         return gameReviewDtos;
     }
 
-    public void saveReview(GameReviewDto gameReviewDto) {
-        GameReview g = new GameReview();
+    public void saveReview(final GameReviewDto gameReviewDto) {
+        final GameReview g = new GameReview();
         GameReviewMapper.toEntity(gameReviewDto, g);
 
         g.setGame(gameRepository.findByName(gameReviewDto.getGame()));
@@ -43,5 +44,14 @@ public class GameReviewService {
                 break;
             }
         }
+    }
+
+    public List<GameReviewDto> getAllForGame(final GameDto gameDto) {
+        final Game g = gameRepository.findByName(gameDto.getName());
+        final List<GameReview> gameReviews = gameReviewRepository.findAllByGame(g);
+        final List<GameReviewDto> gameReviewDtos = new ArrayList<>();
+
+        GameReviewMapper.toDtoList(gameReviews, gameReviewDtos);
+        return gameReviewDtos;
     }
 }

@@ -9,12 +9,15 @@ import java.util.stream.Collectors;
 public class GameReviewMapper {
 
     public static void toDto(GameReview gameReview, GameReviewDto gameReviewDto) {
+        gameReviewDto.setId(gameReview.getId());
         gameReviewDto.setComments(gameReview.getComments());
         gameReviewDto.setGame(gameReview.getGame().getName());
+        gameReviewDto.setGamePhoto(gameReview.getGame().getImgPath());
         gameReviewDto.setUser(gameReview.getUser().getName());
     }
 
     public static void toEntity(GameReviewDto gameReviewDto, GameReview gameReview) {
+        gameReview.setId(gameReviewDto.getId());
         gameReview.setComments(gameReviewDto.getComments());
     }
 

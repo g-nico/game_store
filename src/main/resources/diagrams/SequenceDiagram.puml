@@ -1,0 +1,8 @@
+@startuml
+
+index <-- GameController: List<GameDto>
+GameController <-- GameService: List<GameDto>
+GameService <-- GameRepo: List<Game>
+database db
+GameRepo <-- db: SQL Query
+@enduml
